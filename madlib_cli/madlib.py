@@ -1,4 +1,3 @@
-from textwrap import dedent
 import re
 
 
@@ -21,19 +20,30 @@ def merge(stripped, inputs):
     return stripped.format(*inputs)
 
 
-def welcome():
-    print(dedent("""
+welcome = """
     Heyo! Welcome to the MAD world of madlib!
-    To play: please follow the prompts!"""))
+    To play: please follow the prompts!"""
 
 
-welcome()
-# def story = ("It was a {Adjective} and {Adjective} {Noun}.")
+def main():
+    print(welcome)
+    file_path = input("Enter file path or hit Enter/Return")
+    if file_path == "":
+        file_path == "assets/madlib.txt"
+    try:
+        message = read_template(file_path)
+        empty_string, parts = parse_template(message)
+        filled_list = []
+        for i in parts:
+            user_input = input(f" Enter {i} > ")
+            filled_list.append(user_input)
+        result = merge(empty_string, filled_list)
+        print(f"\nWas that fun? Here are your results:\n\n" + result)
+        with open('assets/result.txt', 'w') as author:
+            author.write(result)
+    except:
+        print('Oops! An error occurred.')
 
 
-adjective = input("Enter an adjective: ")
-adjective2 = input("Enter an adjective: ")
-noun = input("Enter a noun: ")
-
-story = ("It was a " + adjective + " and " + adjective2 + " " + noun)
-print(story)
+if __name__ == '__main__':
+    main()
