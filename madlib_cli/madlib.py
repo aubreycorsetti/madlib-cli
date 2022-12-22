@@ -10,7 +10,7 @@ def read_template(file):
         raise fnf_error
 
 
-def parse(string):
+def parse_template(string):
     words = tuple(re.findall(r"{([^{}]*)}", string))
     for x in words:
         string = string.replace(x, "")
