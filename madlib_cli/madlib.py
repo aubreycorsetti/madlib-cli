@@ -10,10 +10,10 @@ def read_template(file):
 
 
 def parse_template(string):
-    words = tuple(re.findall(r"{([^{}]*)}", string))
-    for x in words:
+    pieces = tuple(re.findall(r"{([^{}]*)}", string))
+    for x in pieces:
         string = string.replace(x, "")
-        return string, words
+    return string, pieces
 
 
 def merge(stripped, inputs):
@@ -21,28 +21,29 @@ def merge(stripped, inputs):
 
 
 welcome = """
-    Heyo! Welcome to the MAD world of madlib!
-    To play: please follow the prompts!"""
+Heyo! Welcome to the MAD world of madlib!
+To play: please follow the prompts!
+"""
 
 
 def main():
     print(welcome)
-    file_path = input("Enter file path or hit Enter/Return")
+    file_path = input(" Enter File Path or hit 'Enter' for the default > ")
     if file_path == "":
-        file_path == "assets/madlib.txt"
+        file_path = "assets/madlib.txt"
     try:
-        message = read_template(file_path)
-        empty_string, parts = parse_template(message)
+        script = read_template(file_path)
+        empty_string, parts = parse_template(script)
         filled_list = []
         for i in parts:
-            user_input = input(f" Enter {i} > ")
+            user_input = input(f"  Enter {i} > ")
             filled_list.append(user_input)
         result = merge(empty_string, filled_list)
-        print(f"\nWas that fun? Here are your results:\n\n" + result)
-        with open('assets/result.txt', 'w') as author:
-            author.write(result)
+        print(f"\nHere is your Madlib:\n\n" + result)
+        with open('assets/result.txt', 'w') as writer:
+            writer.write(result)
     except:
-        print('Oops! An error occurred.')
+        print('An error occurred')
 
 
 if __name__ == '__main__':
